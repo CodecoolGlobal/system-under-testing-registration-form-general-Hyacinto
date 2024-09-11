@@ -1,0 +1,37 @@
+{% extends "logged-in.html" %}
+
+{% block head %} {% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        {% for student in data %}
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card border-success text-bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title mb-2">{{ student["first_name"] }} {{ student["last_name"] }}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for key in student.keys() if "name" not in key and key != "welcome_package" %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col">{{ key.replace("_", " ").capitalize().replace("Id", "ID") }}:</div>
+                                    <div class="col ms-auto">{{ student[key] }}</div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col">Welcome package:</div>
+                                <div class="col ms-auto">{{ "Received" if student["welcome_package"] else "Missing" }}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+        {% endfor %}
+    </div>
+
+{% endblock %}

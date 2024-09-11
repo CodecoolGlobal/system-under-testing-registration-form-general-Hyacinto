@@ -1,0 +1,30 @@
+{% extends "logged-out.html" %}
+
+{% block content %}
+    <div class="container">
+        {% if after_unsuccessful %}
+            <div class="alert alert-danger col-md-6" role="alert">
+                Credential validation failed.
+            </div>
+        {% endif %}
+        <form action="{{ url_for("register") }}" method="POST">
+            <div class="col-md-6 mb-2">
+                <label for="user" class="form-label">Username</label>
+                <input type="text" class="form-control mb-2" id="user" name="username" required>
+            </div>
+            <div class="col-md-6 mb-2">
+                <label for="inputPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputPassword" name="password" required pattern="(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*">
+                <div class="form-text mb-2">At least 8 characters long, contains uppercase and lowercase letters and at least one number</div>
+            </div>
+            <div class="col-md-6 mb-2">
+                <label for="inputPasswordConfirmation" class="form-label">Confirm password</label>
+                <input type="password" class="form-control mb-2" id="inputPasswordConfirmation" name="password" required pattern="(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*">
+                <div class="form-text mb-2">The two entered passwords must match</div>
+            </div>
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

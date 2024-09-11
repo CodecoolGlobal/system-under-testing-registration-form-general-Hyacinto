@@ -1,0 +1,24 @@
+{% extends "logged-out.html" %}
+
+{% block content %}
+    <div class="container">
+        {% if after_unsuccessful %}
+            <div class="alert alert-danger col-md-6" role="alert">
+                Credential validation failed.
+            </div>
+        {% endif %}
+        <form action="{{ url_for("login") }}" method="POST">
+            <div class="col-md-6 mb-2">
+                <label for="user" class="form-label">Username</label>
+                <input type="text" class="form-control" id="user" name="username" required>
+            </div>
+            <div class="col-md-6 mb-2">
+                <label for="inputPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputPassword" name="password" required>
+            </div>
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

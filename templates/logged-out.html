@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block top_nav_bar %}
+    <nav class="navbar navbar-expand-sm bg-body-tertiary mb-5">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav col-12">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login_page') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('registration_page') }}">Sign up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block headline %}
+    <div class="container">
+        <h2>Welcome to Aegir!</h2>
+    </div>
+{% endblock %}

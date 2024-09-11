@@ -1,0 +1,155 @@
+{% extends "logged-in.html" %}
+
+{% block head %}
+    <script src="{{ url_for('static', filename='studentForm.js') }}" defer></script>
+{% endblock %}
+
+{% block headline %}
+    <div class="container mb-4">
+        <h2>New Student - Aegir Student Information System</h2>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if added_student_email %}
+            <div class="alert alert-success col-md-12" role="alert">
+                Student {{ added_student_email }} added successfully.
+
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="form-container" class="container">
+        <form id="student-form" action="{{ url_for('add_student') }}" method="POST" class="row g-3 needs-validation"
+              novalidate>
+            <h4>Personal Identifiers</h4>
+            <div class="col-md-6">
+                <label for="firstName" class="form-label">First name</label>
+                <input type="text" class="form-control" id="firstName" name="first_name" placeholder="Pál" required>
+                <div class="invalid-feedback">
+                    Please fill in the first name.
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="lastName" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Kő" required>
+                <div class="invalid-feedback">
+                    Please fill in the last name.
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="id-card-number" class="form-label">ID card number</label>
+                <input type="text" id="id-card-number" class="form-control" name="id_card_number" placeholder="654321AB"
+                       required pattern="[0-9]{6}[A-Z]{2}">
+                <div class="form-text mb-2">Személyi igazolvány szám</div>
+                <div class="invalid-feedback">
+                    Please provide a valid ID card number.
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="id-number" class="form-label">Personal Identification Number</label>
+                <input type="text" id="id-number" class="form-control" name="id_number" placeholder="1-19630531-0103"
+                       required pattern="[1-4]-[1-2][0,9][0-9]{2}[0-1][0-9][0-3][0-9]-[0-9]{4}">
+                <div class="form-text mb-2">Személyi azonosító</div>
+                <div class="invalid-feedback">
+                    Please provide a valid Personal Identification Number.
+                </div>
+            </div>
+            <hr>
+            <h4>Contact Information</h4>
+            <div class="col-md-6">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmail" name="email" placeholder="example@student.hu"
+                       required>
+            </div>
+            <div class="col-md-6">
+                <label for="inputPhone" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="+36 20 987 6543"
+                       required pattern="\+{0,1}[0-9]{8-}">
+                <div class="invalid-feedback">Please provide a valid phone number (without whitespaces)</div>
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Street Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="Kossuth Lajos u. 42. 3. em. 5."
+                       name="street_address" required>
+            </div>
+            <div class="col-md-6">
+                <label for="inputCity" class="form-label">City</label>
+                <input type="text" class="form-control" id="inputCity" name="city" required>
+            </div>
+            <div class="col-md-4">
+                <label for="inputCourse" class="form-label">County</label>
+                <select id="inputCourse" class="form-select" name="county" required>
+                    <option value="" selected disabled>Choose...</option>
+                    <option>Budapest</option>
+                    <option>Bács-Kiskun</option>
+                    <option>Baranya</option>
+                    <option>Békés</option>
+                    <option>Borsod-Abaúj-Zemplén</option>
+                    <option>Csongrád</option>
+                    <option>Fejér</option>
+                    <option>Győr-Moson-Sopron</option>
+                    <option>Hajdú-Bihar</option>
+                    <option>Heves</option>
+                    <option>Jász-Nagykun-Szolnok</option>
+                    <option>Komárom-Esztergom</option>
+                    <option>Nógrád</option>
+                    <option>Pest</option>
+                    <option>Somogy</option>
+                    <option>Szabolcs-Szatmár-Bereg</option>
+                    <option>Tolna</option>
+                    <option>Vas</option>
+                    <option>Veszprém</option>
+                    <option>Zala</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="inputZip" class="form-label">Zip</label>
+                <input type="number" class="form-control" id="inputZip" name="zip" required min="1010" max="9999">
+            </div>
+            <hr>
+            <h4>Course Information</h4>
+            <div class="col-md-6">
+                <label for="formerAverage" class="form-label">Average of Grades in Previous Studies</label>
+                <input type="number" class="form-control" name="average_of_grades" id="formerAverage" min="1" max="5" step="0.01"
+                       required>
+            </div>
+            <div class="col-md-6">
+                <label for="admissionScore" class="form-label">Admission Score</label>
+                <input type="number" class="form-control" name="admission_score" id="admissionScore" min="0" max="100" required>
+            </div>
+            <div class="col-md-6">
+                <div class="form-check">
+                    <input type="radio" class="form-input" id="fullstack" name="course_type" value="Fullstack" required>
+                    <label for="fullstack" class="form-label">Admitted to fullstack course</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-input" id="frontend" name="course_type" value="Frontend">
+                    <label for="frontend" class="form-label">Admitted to frontend course</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-input" id="backend" name="course_type" value="Backend">
+                    <label for="backend" class="form-label">Admitted to backend course</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="startDate" class="form-label">Starting Date</label>
+                <input type="date" id="startDate" class="form-control" min="2022-01-01" max="2028-01-01"
+                       name="starting_date" required>
+            </div>
+            <div class="col-md-12 align-self-center">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="gridCheck" role="switch" name="welcome_package">
+                    <label class="form-check-label" for="gridCheck">
+                        Welcome package received
+                    </label>
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
